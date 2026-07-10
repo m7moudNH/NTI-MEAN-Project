@@ -1,4 +1,4 @@
-const Product = require("../models/Product");
+const Product = require("../models/Product-model");
 const deleteUploadedFiles = require("../utils/deleteUploadedFiles");
 
 const getAllProducts = async (req, res) => {

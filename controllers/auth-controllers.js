@@ -1,4 +1,4 @@
-const User = require("../models/users-model");
+const User = require("../models/user-model");
 const generateToken = require("../utils/get-jwt");
 const deleteUploadedFile = require("../utils/deleteUploadedFiles.js");
 const bcrypt = require("bcryptjs");
@@ -21,7 +21,7 @@ const signUp = async (req, res) => {
 		if (req.file) {
 			deleteUploadedFile("users", req.file.filename);
 		}
-		res.status(400).json({
+		res.status(500).json({
 			status: "error",
 			message: `error sign up ${error}`,
 		});
@@ -32,24 +32,23 @@ const signIn = async (req, res) => {
 	try {
 		const { email, password } = req.body;
 		if (!email || !password) {
-			res.status(400).json({
+			return res.status(400).json({
 				status: "fail",
 				message: "Email and Password are required",
 			});
 		}
-
 		const user = await User.findOne({
 			email,
 		}).select("+password");
 		if (!user) {
-			res.status(400).json({
+			return res.status(401).json({
 				status: "fail",
 				message: "Invalid Email or Password",
 			});
 		}
-		const comparePassword = await bcrypt.compare(password, user.password);
-		if (!comparePassword) {
-			res.status(400).json({
+		const matchPassword = await bcrypt.compare(password, user.password);
+		if (!matchPassword) {
+			return res.status(400).json({
 				status: "fail",
 				message: "Invalid Email or Password",
 			});
