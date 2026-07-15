@@ -1,0 +1,66 @@
+<div class="container profile-page">
+  <h1 class="page-title">My Profile</h1>
+
+  <div class="spinner" *ngIf="loading"></div>
+
+  <div class="profile-sections" *ngIf="!loading">
+    <section class="card">
+      <h2>Profile Details</h2>
+      <p class="alert alert-success" *ngIf="profileMessage">{{ profileMessage }}</p>
+      <p class="alert alert-error" *ngIf="profileError">{{ profileError }}</p>
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" formControlName="firstName" />
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" formControlName="lastName" />
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" formControlName="phone" />
+        </div>
+        <div class="field">
+          <label>Address</label>
+          <input type="text" formControlName="address" />
+        </div>
+        <button class="btn btn-primary" [disabled]="saving">{{ saving ? 'Saving...' : 'Save Changes' }}</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Change Password</h2>
+      <p class="alert alert-success" *ngIf="passwordMessage">{{ passwordMessage }}</p>
+      <p class="alert alert-error" *ngIf="passwordError">{{ passwordError }}</p>
+      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+        <div class="field">
+          <label>Current password</label>
+          <input type="password" formControlName="currentPassword" />
+        </div>
+        <div class="field">
+          <label>New password</label>
+          <input type="password" formControlName="newPassword" />
+        </div>
+        <button class="btn btn-primary" [disabled]="passwordSaving">
+          {{ passwordSaving ? 'Updating...' : 'Update Password' }}
+        </button>
+      </form>
+    </section>
+
+    <section class="card danger-zone">
+      <h2>Delete Account</h2>
+      <p class="danger-copy">This permanently deletes your account. Enter your password to confirm.</p>
+      <p class="alert alert-error" *ngIf="deleteError">{{ deleteError }}</p>
+      <form [formGroup]="deleteForm" (ngSubmit)="deleteAccount()">
+        <div class="field">
+          <label>Password</label>
+          <input type="password" formControlName="password" />
+        </div>
+        <button class="btn btn-danger" [disabled]="deleting">
+          {{ deleting ? 'Deleting...' : 'Delete Account' }}
+        </button>
+      </form>
+    </section>
+  </div>
+</div>

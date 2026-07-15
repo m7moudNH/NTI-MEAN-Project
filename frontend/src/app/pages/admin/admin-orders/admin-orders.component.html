@@ -1,0 +1,33 @@
+<div class="container admin-page">
+  <h1 class="page-title">Manage Orders</h1>
+
+  <p class="alert alert-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <div class="spinner" *ngIf="loading"></div>
+
+  <div class="admin-table" *ngIf="!loading">
+    <div class="table-row table-head">
+      <span>Order</span>
+      <span>Customer</span>
+      <span>Items</span>
+      <span>Total</span>
+      <span>Status</span>
+    </div>
+    <div class="table-row" *ngFor="let order of orders">
+      <span>#{{ order._id.slice(-8) }}</span>
+      <span class="truncate">{{ customerLabel(order) }}</span>
+      <span>{{ order.items.length }}</span>
+      <span>${{ order.totalPrice }}</span>
+      <span>
+        <select
+          [ngModel]="order.status"
+          (ngModelChange)="updateStatus(order, $event)"
+          [disabled]="updatingId === order._id"
+        >
+          <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+        </select>
+      </span>
+    </div>
+    <p class="empty-state" *ngIf="orders.length === 0">No orders yet.</p>
+  </div>
+</div>

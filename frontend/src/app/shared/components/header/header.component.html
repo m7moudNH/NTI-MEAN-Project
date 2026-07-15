@@ -1,0 +1,48 @@
+<header class="site-header">
+  <div class="container bar">
+    <button class="icon-btn menu-toggle" (click)="toggleMenu()" aria-label="Menu">☰</button>
+    <a routerLink="/" class="logo">SHOP.CO</a>
+
+    <nav class="nav-links">
+      <a routerLink="/shop">Shop</a>
+    </nav>
+
+    <div class="search-wrap">
+      <input
+        type="text"
+        placeholder="Search for products..."
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="submitSearch()"
+      />
+      <button class="icon-btn" (click)="submitSearch()" aria-label="Search">🔍</button>
+    </div>
+
+    <div class="actions">
+      <a routerLink="/cart" class="icon-btn" aria-label="Cart">🛒</a>
+      <div class="account" (click)="toggleAccountMenu()">
+        <button class="icon-btn" aria-label="Account">👤</button>
+        <div class="account-menu" *ngIf="accountMenuOpen">
+          <ng-container *ngIf="auth.isLoggedIn(); else guestLinks">
+            <a routerLink="/profile">My Profile</a>
+            <a routerLink="/orders">My Orders</a>
+            <a routerLink="/admin/products" *ngIf="auth.isAdmin()">Admin: Products</a>
+            <a routerLink="/admin/orders" *ngIf="auth.isAdmin()">Admin: Orders</a>
+            <button (click)="logout()">Log Out</button>
+          </ng-container>
+          <ng-template #guestLinks>
+            <a routerLink="/login">Log In</a>
+            <a routerLink="/signup">Sign Up</a>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" *ngIf="menuOpen">
+    <a routerLink="/shop" (click)="toggleMenu()">Shop</a>
+    <a routerLink="/cart" (click)="toggleMenu()">Cart</a>
+    <a routerLink="/orders" (click)="toggleMenu()" *ngIf="auth.isLoggedIn()">My Orders</a>
+    <a routerLink="/profile" (click)="toggleMenu()" *ngIf="auth.isLoggedIn()">Profile</a>
+    <a routerLink="/login" (click)="toggleMenu()" *ngIf="!auth.isLoggedIn()">Log In</a>
+  </nav>
+</header>

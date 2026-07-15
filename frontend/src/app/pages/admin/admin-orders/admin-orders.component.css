@@ -1,0 +1,28 @@
+.admin-page { padding: 32px 0 60px; }
+.page-title { font-size: 26px; margin-bottom: 20px; }
+
+.admin-table { display: flex; flex-direction: column; border: 1px solid var(--color-gray-300); border-radius: var(--radius-lg); overflow: hidden; }
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.6fr 0.8fr 1.2fr;
+  gap: 12px;
+  padding: 14px 18px;
+  align-items: center;
+  border-bottom: 1px solid var(--color-gray-100);
+  font-size: 14px;
+}
+.table-row:last-child { border-bottom: none; }
+.table-head { background: var(--color-gray-50); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+select {
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+@media (max-width: 700px) {
+  .table-row { grid-template-columns: 1fr; gap: 6px; }
+  .table-head { display: none; }
+}

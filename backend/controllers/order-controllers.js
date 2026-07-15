@@ -33,11 +33,14 @@ const createOrder = async (req, res) => {
 			product.stock -= item.quantity;
 			await product.save();
 		}
-
+		const totalPrice = cart.items.reduce(
+			(sum, item) => sum + item.priceSnapshot * item.quantity,
+			0,
+		);
 		const order = await Order.create({
 			userId,
 			items: cart.items,
-			totalPrice: cart.totalPrice,
+			totalPrice,
 		});
 
 		cart.items = [];

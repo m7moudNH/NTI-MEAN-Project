@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const dbConnect = require("./config/db-connect");
 const productRouter = require("./routes/product-routes");
 const userRouter = require("./routes/user-routes");
@@ -9,6 +10,8 @@ const orderRouter = require("./routes/order-routes");
 require("dotenv").config();
 dbConnect();
 const app = express();
+app.use(cors());
+app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 
 app.use("/api/v1/products", productRouter);

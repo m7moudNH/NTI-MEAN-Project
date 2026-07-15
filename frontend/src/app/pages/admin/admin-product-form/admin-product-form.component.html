@@ -1,0 +1,89 @@
+<div class="container admin-page">
+  <div class="breadcrumbs"><a routerLink="/admin/products">Manage Products</a> &gt; <span>{{ isEdit ? 'Edit' : 'New' }}</span></div>
+  <h1 class="page-title">{{ isEdit ? 'Edit Product' : 'New Product' }}</h1>
+
+  <div class="spinner" *ngIf="loading"></div>
+
+  <form class="card form-card" [formGroup]="form" (ngSubmit)="submit()" *ngIf="!loading">
+    <p class="alert alert-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <div class="field">
+      <label>Title</label>
+      <input type="text" formControlName="title" />
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      <textarea rows="4" formControlName="description"></textarea>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label>Price</label>
+        <input type="number" min="0" formControlName="price" />
+      </div>
+      <div class="field">
+        <label>Stock</label>
+        <input type="number" min="0" formControlName="stock" />
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label>Category</label>
+        <select formControlName="category">
+          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Brand</label>
+        <input type="text" formControlName="brand" />
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label>Gender (optional)</label>
+        <select formControlName="gender">
+          <option value="">—</option>
+          <option *ngFor="let g of genders" [value]="g">{{ g }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Discount %</label>
+        <input type="number" min="0" max="100" formControlName="discount" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Sizes</label>
+      <div class="chip-list">
+        <button type="button" *ngFor="let s of sizes" class="chip" [class.active]="isSizeSelected(s)" (click)="toggleSize(s)">
+          {{ s }}
+        </button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Colors (comma-separated)</label>
+      <input type="text" formControlName="colors" placeholder="Black, White, Red" />
+    </div>
+
+    <div class="field checkbox-field">
+      <label><input type="checkbox" formControlName="isFeatured" /> Featured product</label>
+    </div>
+
+    <div class="field">
+      <label>Image</label>
+      <img *ngIf="imagePreview" [src]="imagePreview" class="preview" alt="Current product image" />
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="saving">
+        {{ saving ? 'Saving...' : (isEdit ? 'Save Changes' : 'Create Product') }}
+      </button>
+      <a routerLink="/admin/products" class="btn btn-outline">Cancel</a>
+    </div>
+  </form>
+</div>

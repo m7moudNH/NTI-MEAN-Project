@@ -1,0 +1,43 @@
+<div class="container order-detail-page">
+  <div class="breadcrumbs"><a routerLink="/orders">My Orders</a> &gt; <span>Order Detail</span></div>
+
+  <div class="spinner" *ngIf="loading"></div>
+
+  <p class="alert alert-error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
+
+  <ng-container *ngIf="!loading && order">
+    <div class="order-head">
+      <div>
+        <h1>Order #{{ order._id.slice(-8) }}</h1>
+        <p class="order-date" *ngIf="order.createdAt">Placed {{ order.createdAt | date: 'medium' }}</p>
+      </div>
+      <span class="badge badge-status">{{ order.status }}</span>
+    </div>
+
+    <div class="card items-card">
+      <div class="order-item-row" *ngFor="let item of order.items">
+        <div class="thumb">
+          <img *ngIf="imageSrc(item.productId)" [src]="imageSrc(item.productId)" [alt]="asProduct(item.productId)?.title" />
+        </div>
+        <div class="item-info">
+          <p class="item-title">{{ asProduct(item.productId)?.title || 'Product' }}</p>
+          <p class="item-meta">Qty {{ item.quantity }} · ${{ item.priceSnapshot }} each</p>
+        </div>
+        <p class="item-total">${{ item.priceSnapshot * item.quantity }}</p>
+      </div>
+      <div class="order-total-row">
+        <span>Total</span>
+        <strong>${{ order.totalPrice }}</strong>
+      </div>
+    </div>
+
+    <button
+      class="btn btn-outline"
+      *ngIf="order.status === 'pending'"
+      [disabled]="cancelling"
+      (click)="cancel()"
+    >
+      {{ cancelling ? 'Cancelling...' : 'Cancel Order' }}
+    </button>
+  </ng-container>
+</div>

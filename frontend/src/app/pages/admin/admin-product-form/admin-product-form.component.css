@@ -1,0 +1,21 @@
+.admin-page { padding: 24px 0 60px; }
+.page-title { font-size: 26px; margin-bottom: 20px; }
+.form-card { max-width: 640px; display: flex; flex-direction: column; }
+.grid-2 { display: grid; grid-template-columns: 1fr; gap: 0 16px; }
+.chip-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1px solid var(--color-gray-300);
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  padding: 8px 14px;
+  font-size: 13px;
+}
+.chip.active { background: var(--color-black); color: var(--color-white); border-color: var(--color-black); }
+.checkbox-field label { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+.checkbox-field input { width: auto; }
+.preview { width: 100px; height: 100px; object-fit: cover; border-radius: var(--radius-md); margin-bottom: 10px; background: var(--color-gray-100); }
+.form-actions { display: flex; gap: 12px; margin-top: 10px; }
+
+@media (min-width: 600px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+}

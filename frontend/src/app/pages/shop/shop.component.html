@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="breadcrumbs"><a routerLink="/">Home</a> &gt; <span>Shop</span></div>
+
+  <div class="shop-layout">
+    <aside class="filters-panel" [class.open]="filtersOpen">
+      <div class="filters-head">
+        <h3>Filters</h3>
+        <button class="close-btn" (click)="filtersOpen = false" aria-label="Close filters">✕</button>
+      </div>
+
+      <div class="filter-group">
+        <label>Search</label>
+        <input type="text" [(ngModel)]="filters.title" placeholder="Product name..." />
+      </div>
+
+      <div class="filter-group">
+        <label>Category</label>
+        <div class="chip-list">
+          <button
+            *ngFor="let c of categories"
+            class="chip"
+            [class.active]="filters.category === c"
+            (click)="selectCategory(c)"
+          >
+            {{ c }}
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Gender</label>
+        <div class="chip-list">
+          <button
+            *ngFor="let g of genders"
+            class="chip"
+            [class.active]="filters.gender === g"
+            (click)="filters.gender = filters.gender === g ? '' : g"
+          >
+            {{ g }}
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Price</label>
+        <div class="price-row">
+          <input type="number" [(ngModel)]="filters.priceGte" placeholder="Min" min="0" />
+          <span>–</span>
+          <input type="number" [(ngModel)]="filters.priceLte" placeholder="Max" min="0" />
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>Colors</label>
+        <div class="color-list">
+          <button
+            *ngFor="let c of colorOptions"
+            class="color-swatch"
+            [class.active]="filters.colors === c"
+            [style.background]="c"
+            [title]="c"
+            (click)="selectColor(c)"
+          ></button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block" (click)="applyFilters()">Apply Filter</button>
+      <button class="btn btn-outline btn-block" (click)="clearFilters()">Clear</button>
+    </aside>
+
+    <section class="results">
+      <div class="results-head">
+        <h1>Shop</h1>
+        <button class="btn btn-outline btn-sm filters-toggle" (click)="filtersOpen = true">Filters</button>
+      </div>
+
+      <div class="spinner" *ngIf="loading"></div>
+
+      <ng-container *ngIf="!loading">
+        <div class="product-grid" *ngIf="products.length > 0; else empty">
+          <app-product-card *ngFor="let p of products" [product]="p"></app-product-card>
+        </div>
+        <ng-template #empty>
+          <p class="empty-state">No products match these filters.</p>
+        </ng-template>
+      </ng-container>
+
+      <app-pagination [page]="page" [hasNextPage]="hasNextPage" (pageChange)="onPageChange($event)"></app-pagination>
+    </section>
+  </div>
+</div>
+
+<app-newsletter></app-newsletter>

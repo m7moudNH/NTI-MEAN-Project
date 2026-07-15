@@ -1,0 +1,6 @@
+.profile-page { padding: 40px 24px 60px; }
+.page-title { font-size: 30px; margin-bottom: 28px; }
+.profile-sections { display: flex; flex-direction: column; gap: 24px; max-width: 520px; }
+.profile-sections h2 { font-size: 18px; margin-bottom: 16px; }
+.danger-zone { border-color: #ffd6d6; }
+.danger-copy { font-size: 13px; color: var(--color-gray-700); margin-bottom: 16px; }

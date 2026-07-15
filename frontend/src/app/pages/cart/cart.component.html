@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="breadcrumbs"><a routerLink="/">Home</a> &gt; <span>Cart</span></div>
+  <h1 class="page-title">Your Cart</h1>
+
+  <ng-container *ngIf="auth.isLoggedIn(); else guestState">
+    <div class="spinner" *ngIf="loading"></div>
+
+    <ng-container *ngIf="!loading">
+      <p class="alert alert-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <div class="cart-layout" *ngIf="cart && cart.items.length > 0; else emptyCart">
+        <div class="items-panel card">
+          <div class="cart-row" *ngFor="let item of cart.items">
+            <div class="thumb">
+              <img *ngIf="imageSrc(item)" [src]="imageSrc(item)" [alt]="asProduct(item)?.title" />
+              <div class="thumb-placeholder" *ngIf="!imageSrc(item)"></div>
+            </div>
+            <div class="row-info">
+              <div class="row-head">
+                <h3>{{ asProduct(item)?.title || 'Product' }}</h3>
+                <button
+                  class="remove-btn"
+                  (click)="remove(item)"
+                  [disabled]="busyItemId === itemId(item)"
+                  aria-label="Remove item"
+                >
+                  🗑
+                </button>
+              </div>
+              <p class="line-price">${{ item.priceSnapshot }} each</p>
+              <div class="row-foot">
+                <div class="qty-stepper">
+                  <span>Qty: {{ item.quantity }}</span>
+                  <button (click)="increment(item)" [disabled]="busyItemId === itemId(item)">+1</button>
+                </div>
+                <span class="line-total">${{ lineTotal(item) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-panel card">
+          <h3>Order Summary</h3>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>${{ subtotal }}</strong>
+          </div>
+          <div class="summary-row total-row">
+            <span>Total</span>
+            <strong>${{ subtotal }}</strong>
+          </div>
+          <button class="btn btn-primary btn-block" [disabled]="checkingOut" (click)="checkout()">
+            {{ checkingOut ? 'Placing order...' : 'Go to Checkout →' }}
+          </button>
+        </div>
+      </div>
+
+      <ng-template #emptyCart>
+        <div class="empty-state">
+          <p>Your cart is empty.</p>
+          <a routerLink="/shop" class="btn btn-primary">Continue Shopping</a>
+        </div>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #guestState>
+    <div class="empty-state">
+      <p>Log in to view your cart.</p>
+      <a routerLink="/login" class="btn btn-primary">Log In</a>
+    </div>
+  </ng-template>
+</div>
+
+<app-newsletter></app-newsletter>

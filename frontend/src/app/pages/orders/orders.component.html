@@ -1,0 +1,24 @@
+<div class="container orders-page">
+  <div class="breadcrumbs"><a routerLink="/">Home</a> &gt; <span>My Orders</span></div>
+  <h1 class="page-title">My Orders</h1>
+
+  <div class="spinner" *ngIf="loading"></div>
+
+  <div class="empty-state" *ngIf="!loading && orders.length === 0">
+    <p>You haven't placed any orders yet.</p>
+    <a routerLink="/shop" class="btn btn-primary">Start Shopping</a>
+  </div>
+
+  <div class="order-list" *ngIf="!loading && orders.length > 0">
+    <a class="order-row card" *ngFor="let order of orders" [routerLink]="['/orders', order._id]">
+      <div>
+        <p class="order-id">Order #{{ order._id.slice(-8) }}</p>
+        <p class="order-date" *ngIf="order.createdAt">{{ order.createdAt | date: 'medium' }}</p>
+      </div>
+      <div class="order-meta">
+        <span class="badge badge-status">{{ order.status }}</span>
+        <span class="order-total">${{ order.totalPrice }}</span>
+      </div>
+    </a>
+  </div>
+</div>

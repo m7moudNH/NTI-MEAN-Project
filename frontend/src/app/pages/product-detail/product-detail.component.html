@@ -1,0 +1,84 @@
+<div class="container" *ngIf="!loading; else loadingTpl">
+  <ng-container *ngIf="product; else notFound">
+    <div class="breadcrumbs">
+      <a routerLink="/">Home</a> &gt; <a routerLink="/shop">Shop</a> &gt;
+      <span class="capitalize">{{ product.category }}</span>
+    </div>
+
+    <div class="detail-layout">
+      <div class="image-wrap">
+        <img *ngIf="product.imageUrl" [src]="imageSrc" [alt]="product.title" />
+        <div *ngIf="!product.imageUrl" class="image-placeholder">No image</div>
+      </div>
+
+      <div class="info">
+        <h1>{{ product.title }}</h1>
+        <app-star-rating [rating]="product.rating"></app-star-rating>
+
+        <div class="price-row">
+          <span class="price">${{ finalPrice }}</span>
+          <ng-container *ngIf="product.discount > 0">
+            <span class="original-price">${{ product.price }}</span>
+            <span class="badge badge-discount">-{{ product.discount }}%</span>
+          </ng-container>
+        </div>
+
+        <p class="description">{{ product.description }}</p>
+
+        <div class="meta-row" *ngIf="product.brand || product.gender">
+          <span *ngIf="product.brand"><strong>Brand:</strong> {{ product.brand }}</span>
+          <span *ngIf="product.gender"><strong>Gender:</strong> {{ product.gender }}</span>
+        </div>
+
+        <div class="meta-row" *ngIf="product.size?.length">
+          <strong>Sizes:</strong>
+          <span class="size-tag" *ngFor="let s of product.size">{{ s }}</span>
+        </div>
+
+        <div class="meta-row" *ngIf="product.colors?.length">
+          <strong>Colors:</strong>
+          <span class="size-tag" *ngFor="let c of product.colors">{{ c }}</span>
+        </div>
+
+        <p class="stock" [class.low]="product.stock === 0">
+          {{ product.stock > 0 ? product.stock + ' in stock' : 'Out of stock' }}
+        </p>
+
+        <div class="add-row">
+          <div class="qty-stepper">
+            <button (click)="decrementQty()" [disabled]="quantity <= 1">−</button>
+            <span>{{ quantity }}</span>
+            <button (click)="incrementQty()" [disabled]="quantity >= product.stock">+</button>
+          </div>
+          <button
+            class="btn btn-primary"
+            [disabled]="product.stock === 0 || addingToCart"
+            (click)="addToCart()"
+          >
+            {{ addingToCart ? 'Adding...' : 'Add to Cart' }}
+          </button>
+        </div>
+
+        <p class="alert alert-success" *ngIf="addedMessage">{{ addedMessage }}</p>
+        <p class="alert alert-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+    </div>
+
+    <section class="related" *ngIf="related.length > 0">
+      <h2>You Might Also Like</h2>
+      <div class="product-grid">
+        <app-product-card *ngFor="let p of related" [product]="p"></app-product-card>
+      </div>
+    </section>
+  </ng-container>
+
+  <ng-template #notFound>
+    <p class="empty-state">Product not found.</p>
+  </ng-template>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="spinner"></div>
+</ng-template>
+
+<app-newsletter></app-newsletter>

@@ -1,0 +1,15 @@
+.orders-page { padding-bottom: 60px; }
+.page-title { font-size: 30px; margin-bottom: 24px; }
+.order-list { display: flex; flex-direction: column; gap: 14px; }
+.order-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--color-black);
+}
+.order-row:hover { background: var(--color-gray-50); }
+.order-id { font-weight: 700; }
+.order-date { font-size: 13px; color: var(--color-gray-500); }
+.order-meta { display: flex; align-items: center; gap: 16px; }
+.order-total { font-weight: 700; }

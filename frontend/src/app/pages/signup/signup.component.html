@@ -1,0 +1,61 @@
+<div class="auth-page container">
+  <div class="auth-card card">
+    <h1>Create Account</h1>
+    <p class="subtitle">Join Shop.co and start shopping.</p>
+
+    <p class="alert alert-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="name-row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" formControlName="firstName" placeholder="Jane" />
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" formControlName="lastName" placeholder="Doe" />
+        </div>
+      </div>
+      <span class="field-error" *ngIf="form.get('firstName')?.touched && form.get('firstName')?.invalid">
+        First and last name must be 3–50 characters.
+      </span>
+
+      <div class="field">
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="you&#64;example.com" />
+        <span class="field-error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+          A valid email is required.
+        </span>
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input type="password" formControlName="password" placeholder="At least 3 characters" />
+        <span class="field-error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+          Password must be 3–50 characters.
+        </span>
+      </div>
+
+      <div class="field">
+        <label>Phone (optional)</label>
+        <input type="tel" formControlName="phone" placeholder="+15551234567" />
+      </div>
+
+      <div class="field">
+        <label>Address (optional)</label>
+        <input type="text" formControlName="address" placeholder="Street, city, country" />
+      </div>
+
+      <div class="field">
+        <label>Profile picture (optional)</label>
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+      </div>
+
+      <button class="btn btn-primary btn-block" [disabled]="loading">
+        {{ loading ? 'Creating account...' : 'Sign Up' }}
+      </button>
+    </form>
+
+    <p class="switch-auth">Already have an account? <a routerLink="/login">Log in</a></p>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <h1>Find clothes that matches your style</h1>
+      <p>
+        Browse through our diverse range of meticulously crafted garments, designed to bring out
+        your individuality and cater to your sense of style.
+      </p>
+      <a routerLink="/shop" class="btn btn-primary">Shop Now</a>
+      <div class="stats">
+        <div><strong>200+</strong><span>International Brands</span></div>
+        <div><strong>2,000+</strong><span>High-Quality Products</span></div>
+        <div><strong>30,000+</strong><span>Happy Customers</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true"></div>
+  </div>
+</section>
+
+<div class="brand-strip">
+  <div class="container brand-row">
+    <span *ngFor="let b of brands">{{ b }}</span>
+  </div>
+</div>
+
+<section class="container product-section">
+  <h2>New Arrivals</h2>
+  <div class="product-grid" *ngIf="!loading; else loadingTpl">
+    <app-product-card *ngFor="let p of newArrivals" [product]="p"></app-product-card>
+  </div>
+  <p class="empty-state" *ngIf="!loading && newArrivals.length === 0">No products yet.</p>
+  <div class="view-all">
+    <a routerLink="/shop" class="btn btn-outline">View All</a>
+  </div>
+</section>
+
+<section class="container product-section">
+  <h2>Top Selling</h2>
+  <div class="product-grid">
+    <app-product-card *ngFor="let p of topSelling" [product]="p"></app-product-card>
+  </div>
+  <p class="empty-state" *ngIf="!loading && topSelling.length === 0">No more products yet.</p>
+  <div class="view-all">
+    <a routerLink="/shop" class="btn btn-outline">View All</a>
+  </div>
+</section>
+
+<section class="container product-section">
+  <h2>Shop by Category</h2>
+  <div class="category-grid">
+    <a
+      *ngFor="let c of categories"
+      class="category-tile"
+      routerLink="/shop"
+      [queryParams]="{ category: c.value }"
+    >
+      {{ c.label }}
+    </a>
+  </div>
+</section>
+
+<ng-template #loadingTpl>
+  <div class="spinner"></div>
+</ng-template>
+
+<app-newsletter></app-newsletter>
