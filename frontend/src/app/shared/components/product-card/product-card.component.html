@@ -1,15 +1,20 @@
 <a class="product-card" [routerLink]="['/products', product._id]">
-  <div class="image-wrap">
-    <img *ngIf="product.imageUrl" [src]="imageSrc" [alt]="product.title" loading="lazy" />
-    <div *ngIf="!product.imageUrl" class="image-placeholder">No image</div>
-  </div>
-  <h3 class="title">{{ product.title }}</h3>
-  <app-star-rating [rating]="product.rating"></app-star-rating>
-  <div class="price-row">
-    <span class="price">${{ finalPrice }}</span>
-    <ng-container *ngIf="product.discount > 0">
-      <span class="original-price">${{ product.price }}</span>
-      <span class="badge badge-discount">-{{ product.discount }}%</span>
-    </ng-container>
-  </div>
+	<div class="image-wrap">
+		<img
+			*ngIf="product.imageUrl"
+			[src]="imageSrc"
+			[alt]="product.title"
+			loading="lazy"
+		/>
+		<div *ngIf="!product.imageUrl" class="image-placeholder">No image</div>
+	</div>
+	<h3 class="title">{{ product.title }}</h3>
+	<app-star-rating [rating]="product.rating"></app-star-rating>
+	<div class="price-row">
+		<span class="price">${{ finalPrice }}</span>
+		<ng-container *ngIf="product.discount > 0">
+			<span class="original-price">${{ product.price }}</span>
+			<span class="badge badge-discount">-{{ product.discount }}%</span>
+		</ng-container>
+	</div>
 </a>

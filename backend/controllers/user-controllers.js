@@ -52,7 +52,7 @@ const updatePassword = async (req, res) => {
 			});
 		}
 
-		const user = await User.findById(req.user.id);
+		const user = await User.findById(req.user.id).select("+password");
 
 		if (!user) {
 			return res.status(404).json({
@@ -95,7 +95,6 @@ const updatePassword = async (req, res) => {
 };
 
 const deleteProfile = async (req, res) => {
-	//password send in body
 	try {
 		const user = await User.findById(req.user.id);
 		if (!user) {

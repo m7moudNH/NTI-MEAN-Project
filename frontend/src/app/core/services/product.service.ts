@@ -31,14 +31,18 @@ export class ProductService {
     let params = new HttpParams();
     if (filters.page) params = params.set('page', filters.page);
     if (filters.limit) params = params.set('limit', filters.limit);
-    if (filters.category) params = params.set('category', filters.category);
+    if (filters.category) params = params.set('category', this.exactMatch(filters.category));
     if (filters.brand) params = params.set('brand', filters.brand);
-    if (filters.gender) params = params.set('gender', filters.gender);
-    if (filters.colors) params = params.set('colors', filters.colors);
+    if (filters.gender) params = params.set('gender', this.exactMatch(filters.gender));
+    if (filters.colors) params = params.set('colors', this.exactMatch(filters.colors));
     if (filters.title) params = params.set('title', filters.title);
     if (filters.priceGte !== undefined) params = params.set('price[gte]', filters.priceGte);
     if (filters.priceLte !== undefined) params = params.set('price[lte]', filters.priceLte);
     return this.http.get<ProductListResponse>(this.baseUrl, { params });
+  }
+
+  private exactMatch(value: string): string {
+    return `^${value}$`;
   }
 
   getById(id: string) {

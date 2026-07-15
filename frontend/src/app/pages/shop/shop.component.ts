@@ -97,6 +97,11 @@ export class ShopComponent implements OnInit {
     this.navigate(1);
   }
 
+  selectGender(gender: string) {
+  this.filters.gender = this.filters.gender === gender ? '' : gender;
+  this.navigate(1);
+}
+
   selectColor(color: string) {
     this.filters.colors = this.filters.colors === color ? '' : color;
     this.navigate(1);
