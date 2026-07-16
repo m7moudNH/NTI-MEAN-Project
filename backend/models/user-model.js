@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
 	phone: {
 		type: String,
 		trim: true,
-		match: [/^\+?[0,9]{10,15}$/, "Invalid Phone Number"],
+		match: [/^\+?[0-9]{10,15}$/, "Invalid Phone Number"],
 	},
 	imageUrl: {
 		type: String,

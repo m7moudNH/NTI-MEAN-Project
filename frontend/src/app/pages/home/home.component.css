@@ -39,7 +39,7 @@
 .hero-art {
 	height: 260px;
 	border-radius: var(--radius-lg);
-	background: linear-gradient(135deg, #a30a0a, #f4f4f4);
+	/* background: linear-gradient(135deg, #000000, #f4f4f4); */
 }
 
 .brand-strip {

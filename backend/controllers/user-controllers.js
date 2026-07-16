@@ -1,4 +1,5 @@
 const User = require("../models/user-model");
+const bcrypt = require("bcryptjs");
 
 const getProfile = async (req, res) => {
 	const user = await User.findById(req.user.id);
@@ -15,7 +16,13 @@ const getProfile = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
-	const allowedFields = ["fistName", "lastName", "phone", "address", "imageUrl"];
+	const allowedFields = [
+		"firstName",
+		"lastName",
+		"phone",
+		"address",
+		"imageUrl",
+	];
 	const updates = {};
 
 	allowedFields.forEach((field) => {
@@ -96,7 +103,7 @@ const updatePassword = async (req, res) => {
 
 const deleteProfile = async (req, res) => {
 	try {
-		const user = await User.findById(req.user.id);
+		const user = await User.findById(req.user.id).select("+password");
 		if (!user) {
 			return res.status(404).json({
 				status: "failed",
